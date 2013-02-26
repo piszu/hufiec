@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="wrapper">
+<!-- aside -->
+<aside>
+<h2><span>Aktualności</span></h2>
+<!-- .news -->
+<ul class="news">
+{% for object in object_list %}
+<li>
+<figure><strong>{{ object.posted_date|date:"d" }}</strong>{{ object.posted_date|date:"M"}} </figure>
+<h3><a href="{% url aktualnosci_view object.id %}">{{ object.title }}</a></h3>
+{{ object.wprowadzenie|safe }}<a href="{% url aktualnosci_view object.id %}">...</a></h3><br>
+</li>
+{% endfor %}
+
+{% if is_paginated %}
+{% if page_obj.has_next %}
+    <a href="./?page={{ page_obj.next_page_number }}"><img src="{{ STATIC_URL }}/images/left.png" width="7%"></a>
+{% endif %}
+{% if page_obj.has_previous %}
+    <a href="./?page={{ page_obj.previous_page_number }}"><img src="{{ STATIC_URL }}/images/right.png" width="7%"></a>
+{% endif %}
+{% endif %}
+
+</ul>
+<!-- /.news -->
+</aside>
+<!-- content -->
+<section id="content">
+<article>
+<h2><span>{{ artykul_detail.title }}</span></h2>
+<pre><h4>Autor:  {{ artykul_detail.author }} &#9;&#9;&#9; Data opublikowania:  {{ artykul_detail.posted_date|date:"Y.m.d" }}</h4></pre>
+<p> {{ artykul_detail.text|safe }}</p>
+</article> 
+</section>
+
+</div>
+{% endblock %}
+
