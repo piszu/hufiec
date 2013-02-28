@@ -136,9 +136,7 @@ a{
 a:hover{
 	text-decoration:none;
 }
-a.login {
-	color:#333333; 
-}
+
 h1 {
 	font-size:34px;
 	line-height:1.2em;
@@ -415,7 +413,9 @@ footer {
 	footer .fleft {
 		padding-left:40px;
 	}
-
+a.dupa {
+	color:#333333; 
+}
 	footer .fright {
 		padding-right:40px;
 	}
