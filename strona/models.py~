@@ -32,10 +32,11 @@ class Artykuly(models.Model):
 
 
 class Druzyny(models.Model):
-	nazwa = models.CharField('Nazwa Drużyny', max_length=100)
+	nazwa = models.CharField('Nazwa Drużyny', max_length=255)
+	menu_name = models.CharField('Skrócona nazwa Drużyny', max_length=255)
 	data_utworzenia = models.DateTimeField('Data utworzenia')
 	gzbiorki = models.CharField('Godzina zbiórek', max_length=15)
-	mzbiorki = models.CharField('Miejsce zbiórek', max_length=100)
+	mzbiorki = models.CharField('Miejsce zbiórek', max_length=255)
 	dziala = models.CharField('Aktywna', max_length=5)
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
 	druzynowy = models.CharField('Drużynowy', max_length=255)

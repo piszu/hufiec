@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.views import generic
+from django.conf.urls.defaults import patterns, include, url
+
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 
 from strona import models
+
+# robots.txt
 
 # user
 def login_user(request):
@@ -13,10 +17,7 @@ def login_user(request):
 		return HttpResponseRedirect("/juser/")
 
 def logout_then_login(request):
-	return django.contrib.auth.views.logout_then_login(request, login_url = '/')
-
-
-
+	return django.contrib.auth.views.logout_then_login(request, login_url = '/logout/')
 
 
 # content
@@ -39,7 +40,7 @@ class DruzynyDetailView(generic.DetailView):
     model = models.Druzyny
 druzyny_detail = DruzynyDetailView.as_view()
 
-@login_required(login_url='/strona/hufiec_view.html')
+
 def aktualnosci_first(request):
 	artykuly_list = models.Artykuly.objects.filter(categories=1).order_by('-posted_date')
 	artykul_detail = models.Artykuly.objects.filter(categories=1).order_by("-id")[0]

@@ -9,7 +9,7 @@
 <ul class="leftmenu">
 {% for object in object_list %}
 <li>
-<h3><a href="{% url druzyny_view object.id %}">{{ object.nazwa }}</a></h3>
+<h3><a href="{% url druzyny_view object.id %}">{{ object.menu_name }}</a></h3>
 </li>
 {% endfor %}
 
@@ -28,7 +28,13 @@ Obecnie funkcje Drużynowego w tej Drużynie pełni <b>{{ druzyny_detail.druzyno
 </p>
 
 <p>{{ druzyny_detail.opis|safe }}</p>
-
+{% if user.is_authenticated %}
+<br>user: {{ user.username }}
+<br>drużyna: {{ druzyny_detail.dziala }}
+{% if user.username = druzyny_detail.dziala %}
+Zarządzaj
+{% endif %}
+{% endif %}
 </article> 
 </section>
 
