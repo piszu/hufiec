@@ -26,7 +26,13 @@ urlpatterns = patterns('',
 	url(r'^h/$', 'strona.views.hufiec_first', name='hufiec_first'), 
 	url(r'^h/(?P<number>[0-9]+)/$', 'strona.views.hufiec_view', name='hufiec_view'), 
 	# druzyny
-	url(r'^d/(?P<number>[0-9]+)/$', 'strona.views.druzyny_view', name='druzyny_view'), 
+#	url(r'^d/(?P<slug>)/$', 'strona.views.druzyny_view', name='druzyny_view'), 
+	url(r'^d/(?P<slug>[\w\-_]+)/$', 'strona.views.druzyny_view', name='druzyny_view'),
+
+	# osoby
+	url(r'^d/(?P<slug>[\w\-_]+)/o/$', 'strona.views.osoby_view', name='osoby_view'),
+	url(r'^d/(?P<slug>[\w\-_]+)/o/(?P<number>[0-9]+)/$', 'strona.views.osoby_detail', name='osoby_detail'),
+	# url(r'^d/(?P<number>[0-9]+)/o/(?P<number>[0-9]+)/$', 'strona.views.osoby_view', name='osoby_view'), 
 	# rodzice
 	url(r'^r/(?P<number>[0-9]+)/$', 'strona.views.rodzice_view', name='rodzice_view'), 
 )

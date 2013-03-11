@@ -29,7 +29,7 @@
         <ul>
           <li><a href="/a/">Home</a></li>
           <li><a href="/h/">Hufiec</a></li>
-          <li><a href="/d/1/">Drużyny</a></li>
+          <li><a href="/d/1ogwrdw/">Drużyny</a></li>
           <li><a href="/r/4/">Rodzice</a></li>
           <li><a href="https://www.facebook.com/orneta.zhp/photos_albums" target="_blank">Galeria</a></li>
 		  <li><a href="https://docs.google.com/folder/d/0B-vSSlYMWDUqUDcybDBiamdIMlU/edit?usp=sharing" target="_blank">Dokumenty</a></li>
@@ -85,5 +85,5 @@ Bank BGŻ 36 2030 0045 1110 0000 0219 4470<br>
   <script type="text/javascript"> Cufon.now(); </script>
 </body>
 <!-- wersjonowanie -->
-<div class="wer">v.1.0.1</div>
+<div class="wer">v.1.0.2</div>
 </html>

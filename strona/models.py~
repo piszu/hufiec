@@ -32,7 +32,7 @@ class Artykuly(models.Model):
 
 
 class Druzyny(models.Model):
-	nazwa = models.CharField('Nazwa Drużyny', max_length=255)
+	nazwa = models.CharField('Nazwa Drużyny', max_length=500)
 	menu_name = models.CharField('Skrócona nazwa Drużyny', max_length=255)
 	data_utworzenia = models.DateTimeField('Data utworzenia')
 	gzbiorki = models.CharField('Godzina zbiórek', max_length=15)
@@ -57,7 +57,7 @@ class Druzyny(models.Model):
 		nazwa_druzyny = property(_get_nazwa_druzyny)
 
 class Osoby(models.Model):
-	dru = models.OneToOneField(Druzyny, verbose_name='OsoDru')
+	dru = models.ForeignKey(Druzyny, verbose_name='OsoDru')
 	imie = models.CharField('Imię', max_length=255)
 	nazwisko = models.CharField('Nazwisko', max_length=255)
 	pesel = models.CharField('PESEL', max_length=11)
@@ -85,7 +85,6 @@ class Skladki(models.Model):
 	oso = models.ForeignKey(Osoby, related_name='SklOso')
 	kwota_sk = models.DecimalField('Kwota składek', max_digits=6, decimal_places=2)
 	rok = models.CharField('Rok', max_length = 5)
-	slug = models.SlugField('Odnośnik', max_length=255, unique=True)
 
 	class Meta:
 		verbose_name = "Składka"
@@ -93,16 +92,14 @@ class Skladki(models.Model):
 		db_table = 'szs_skladki'
 
 	def __unicode__(self):
-		return self.kwota
+		return '%s %s' % (self.rok, self.oso)
 
 class Wplaty(models.Model):
 	oso = models.ForeignKey(Osoby, related_name='WplOso')
 	skl = models.ForeignKey(Skladki, related_name='WplSkl')
 	kwota_wpl = models.DecimalField('Kwota wpłaty', max_digits=6, decimal_places=2)
-	d_wplaty = models.DateField('Data wpłaty', auto_now_add=True)
+	d_wplaty = models.DateField('Data wpłaty', auto_now_add=False)
 	uwagi = models.CharField('Uwagi', max_length=255)
-	slug = models.SlugField('Odnośnik', max_length=255, unique=True)
-
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
 
 	class Meta:
@@ -111,7 +108,7 @@ class Wplaty(models.Model):
 		db_table = 'szs_wplaty'
 
 	def __unicode__(self):
-		return self.kwota
+		return self.kwota_wpl
 
 class Imprezy(models.Model):
 	nazwa = models.CharField('Nazwa', max_length=255)

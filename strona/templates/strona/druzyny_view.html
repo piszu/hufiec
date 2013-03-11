@@ -9,7 +9,7 @@
 <ul class="leftmenu">
 {% for object in object_list %}
 <li>
-<h3><a href="{% url druzyny_view object.id %}">{{ object.menu_name }}</a></h3>
+<h3><a href="{% url druzyny_view object.slug %}">{{ object.menu_name }}</a></h3>
 </li>
 {% endfor %}
 
@@ -24,9 +24,9 @@
 <p>Za datę powstania <b>{{ druzyny_detail.nazwa }}</b> przyjmuje się <b>{{ druzyny_detail.data_utworzenia|date:" d M Y" }}</b>.
 Obecnie funkcje Drużynowego w tej Drużynie pełni <b>{{ druzyny_detail.druzynowy }}</b>.<br>
 <br>Miejsce zbiórek: <b>{{ druzyny_detail.mzbiorki }}</b>
-<br>Godzina zbiórek: <b>{{ druzyny_detail.gzbiorki }}</b>
+<br>Czas: <b>{{ druzyny_detail.gzbiorki }}</b>
 </p>
-
+{% comment %}
 <p>{{ druzyny_detail.opis|safe }}</p>
 {% if user.is_authenticated %}
 <br>user: {{ user.username }}
@@ -35,6 +35,8 @@ Obecnie funkcje Drużynowego w tej Drużynie pełni <b>{{ druzyny_detail.druzyno
 Zarządzaj
 {% endif %}
 {% endif %}
+{% endcomment %}
+Zarządzaj
 </article> 
 </section>
 
