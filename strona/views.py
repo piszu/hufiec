@@ -95,7 +95,7 @@ def osoby_view(request, slug):
 		template_name= "strona/osoby_view.html",
 		extra_context={'osoby_detail': osoby_detail})
 
-def osoby_detail(request, slug):
+def osoby_detail(request, slug1, slug2):
 	dru_id = models.Druzyny.objects.filter(slug=slug)
 	osoby_list = models.Osoby.objects.filter(dru=dru_id).order_by('-nazwisko')
 	osoby_detail = models.Osoby.objects.get(id__exact=1)

@@ -9,8 +9,8 @@
 <ul class="leftmenu">
 {% for object in object_list %}
 <li>
-<h3><a href="{% url osoby_view object.id %}">{{ osoby_detail.slug }}
-{{ object.nazwisko }} {{ object.imie }} {% url osoby_detail object.id  object.id  %} </a></h3>
+<h3><a href="{% url osoby_detail object.dru.slug object.id %}">
+{{ object.nazwisko }} {{ object.imie }} </a></h3>
 </li>
 {% endfor %}
 
