@@ -32,11 +32,12 @@ Obecnie funkcje Drużynowego w tej Drużynie pełni <b>{{ druzyny_detail.druzyno
 <br>user: {{ user.username }}
 <br>drużyna: {{ druzyny_detail.dziala }}
 {% if user.username = druzyny_detail.dziala %}
-Zarządzaj
+Zarządzaj 
 {% endif %}
 {% endif %}
 {% endcomment %}
-Zarządzaj
+<h3><a href="{% url osoby_view druzyny_detail.slug %}">Zarządzaj</a></h3>
+ 
 </article> 
 </section>
 

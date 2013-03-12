@@ -24,7 +24,7 @@
 <p>Za datę powstania <b>{{ druzyny_detail.nazwa }}</b> przyjmuje się <b>{{ druzyny_detail.data_utworzenia|date:" d M Y" }}</b>.
 Obecnie funkcje Drużynowego w tej Drużynie pełni <b>{{ druzyny_detail.druzynowy }}</b>.<br>
 <br>Miejsce zbiórek: <b>{{ druzyny_detail.mzbiorki }}</b>
-<br>Czas i miejsce: <b>{{ druzyny_detail.gzbiorki }}</b>
+<br>Czas: <b>{{ druzyny_detail.gzbiorki }}</b>
 </p>
 {% comment %}
 <p>{{ druzyny_detail.opis|safe }}</p>
@@ -32,11 +32,12 @@ Obecnie funkcje Drużynowego w tej Drużynie pełni <b>{{ druzyny_detail.druzyno
 <br>user: {{ user.username }}
 <br>drużyna: {{ druzyny_detail.dziala }}
 {% if user.username = druzyny_detail.dziala %}
-Zarządzaj
+Zarządzaj 
 {% endif %}
 {% endif %}
 {% endcomment %}
-Zarządzaj
+<h3><a href="{% url osoby_view druzyny_detail.slug %}">Zarządzaj</a></h3>
+ 
 </article> 
 </section>
 
