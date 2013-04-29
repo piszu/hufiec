@@ -6,9 +6,9 @@ from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 
 from strona import models
-
+from django import forms
 # robots.txt
-
+ 
 # user
 def login_user(request):
 	if not request.user.is_authenticated():
@@ -47,6 +47,7 @@ def aktualnosci_first(request):
 	
 	return object_list(request, queryset=artykuly_list,
 		template_name= "strona/home_view.html",
+		paginate_by = 4,
 		extra_context={'artykul_detail': artykul_detail})
 
 def hufiec_first(request):
@@ -95,11 +96,17 @@ def osoby_view(request, slug):
 		template_name= "strona/osoby_view.html",
 		extra_context={'osoby_detail': osoby_detail})
 
-def osoby_detail(request, slug1, slug2):
+def osoby_detail(request, slug, number):
 	dru_id = models.Druzyny.objects.filter(slug=slug)
 	osoby_list = models.Osoby.objects.filter(dru=dru_id).order_by('-nazwisko')
-	osoby_detail = models.Osoby.objects.get(id__exact=1)
+	osoby_detail = models.Osoby.objects.get(id__exact=number)
 	return object_list(request, queryset=osoby_list,
 		template_name= "strona/osoby_view.html",
 		extra_context={'osoby_detail': osoby_detail})
+
+#formularze
+class TestForm(forms.Form):
+	subject = forms.CharField(max_length=100)
+	message = forms.CharField()
+	sender = forms.EmailField()
 
