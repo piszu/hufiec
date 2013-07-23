@@ -19,14 +19,11 @@
 <!-- content -->
 	<section id="content">
 		<article>
-		<h2><span>{{ osoby_detail.nazwa }}</span></h2>
+		<h2><span>{{ osoby_detail.imie }} {{ osoby_detail.nazwisko }}</span></h2>
 		<br>
 		<p>
-			Za datę powstania <b>{{ osoby_detail.imie }} {{ osoby_detail.nazwisko }}</b> przyjmuje się <b>{{ osoby_detail.data_utworzenia|date:" d M Y" }}</b>.
-			Obecnie funkcje Drużynowego w tej Drużynie pełni <b>{{ osoby_detail.druzynowy }}</b>.<br>
-			<br>Miejsce zbiórek: <b>{{ osoby_detail.mzbiorki }}</b>
-			<br>Godzina zbiórek: <b>{{ osoby_detail.gzbiorki }}</b>
-			</p>
+			
+		</p>
 		<p>{{ osoby_detail.opis|safe }}</p>
 			{% if user.is_authenticated %}
 				{% if user.username = osoby_detail.dziala %}

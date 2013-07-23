@@ -11,3 +11,6 @@ admin.site.register(Skladki)
 admin.site.register(Wplaty)
 admin.site.register(Imprezy)
 admin.site.register(Zgloszenia)
+
+
+

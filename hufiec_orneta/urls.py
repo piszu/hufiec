@@ -14,7 +14,8 @@ urlpatterns = patterns('',
     {'template': 'robots.txt', 'mimetype': 'text/plain'}),
 	# user
 	url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
-	url(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
+	url(r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+	url(r'^accounts/profile/$', 'strona.views.profile_view'),
 	# panel administracyjny
 	url(r'^administrator/', include(admin.site.urls)),
 	#redirect na aktualności
@@ -25,6 +26,8 @@ urlpatterns = patterns('',
 	# hufiec
 	url(r'^h/$', 'strona.views.hufiec_first', name='hufiec_first'), 
 	url(r'^h/(?P<number>[0-9]+)/$', 'strona.views.hufiec_view', name='hufiec_view'), 
+	url(r'^h/mapa_wyjazdow/$', 'strona.views.mapa_wyjazdow', name='mapa_wyjazdow'), 
+
 	# druzyny
 #	url(r'^d/(?P<slug>)/$', 'strona.views.druzyny_view', name='druzyny_view'), 
 	url(r'^d/(?P<slug>[\w\-_]+)/$', 'strona.views.druzyny_view', name='druzyny_view'),

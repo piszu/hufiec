@@ -26,17 +26,15 @@ Obecnie funkcje Drużynowego w tej Drużynie pełni <b>{{ druzyny_detail.druzyno
 <br>Miejsce zbiórek: <b>{{ druzyny_detail.mzbiorki }}</b>
 <br>Czas: <b>{{ druzyny_detail.gzbiorki }}</b>
 </p>
-{% comment %}
+
 <p>{{ druzyny_detail.opis|safe }}</p>
+<br>
 {% if user.is_authenticated %}
-<br>user: {{ user.username }}
-<br>drużyna: {{ druzyny_detail.dziala }}
-{% if user.username = druzyny_detail.dziala %}
-Zarządzaj 
-{% endif %}
-{% endif %}
-{% endcomment %}
+	{% if user.last_name = druzyny_detail.slug %}
 <h3><a href="{% url osoby_view druzyny_detail.slug %}">Zarządzaj</a></h3>
+	{% endif %}
+{% endif %}
+
  
 </article> 
 </section>

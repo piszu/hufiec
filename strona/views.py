@@ -5,8 +5,13 @@ from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.decorators import login_required
 
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
 from strona import models
 from django import forms
+
+####
 # robots.txt
  
 # user
@@ -43,8 +48,7 @@ druzyny_detail = DruzynyDetailView.as_view()
 
 def aktualnosci_first(request):
 	artykuly_list = models.Artykuly.objects.filter(categories=1).order_by('-posted_date')
-	artykul_detail = models.Artykuly.objects.filter(categories=1).order_by("-id")[0]
-	
+	artykul_detail = models.Artykuly.objects.filter(categories=1).order_by('-posted_date')[0]
 	return object_list(request, queryset=artykuly_list,
 		template_name= "strona/home_view.html",
 		paginate_by = 4,
@@ -53,7 +57,6 @@ def aktualnosci_first(request):
 def hufiec_first(request):
 	hufiec_list = models.Artykuly.objects.filter(categories=2).order_by('-posted_date')
 	hufiec_detail = models.Artykuly.objects.filter(categories=2).order_by("id")[0]
-
 	return object_list(request, queryset=hufiec_list,
 		template_name= "strona/hufiec_view.html",
 		extra_context={'hufiec_detail': hufiec_detail})
@@ -61,7 +64,6 @@ def hufiec_first(request):
 def aktualnosci_view(request, number):
 	artykuly_list = models.Artykuly.objects.filter(categories=1).order_by('-posted_date')
 	artykul_detail = models.Artykuly.objects.get(id__exact=number) 
-	
 	return object_list(request, queryset=artykuly_list,
 		template_name= "strona/home_view.html",
 		paginate_by = 4,
@@ -103,6 +105,20 @@ def osoby_detail(request, slug, number):
 	return object_list(request, queryset=osoby_list,
 		template_name= "strona/osoby_view.html",
 		extra_context={'osoby_detail': osoby_detail})
+
+def mapa_wyjazdow(request):
+	hufiec_list = models.Artykuly.objects.filter(categories=2).order_by('-posted_date')
+	hufiec_detail = models.Artykuly.objects.filter(categories=2).order_by("id")[0]
+	return object_list(request, queryset=hufiec_list,
+		template_name= "strona/mapa_wyjazdow.html",
+		extra_context={'hufiec_detail': hufiec_detail})
+
+	#return render_to_response( "strona/mapa_wyjazdow.html",  context_instance=RequestContext(request))
+
+def profile_view(request):
+	hufiec_list = models.Artykuly.objects.filter(categories=2).order_by('-posted_date')
+	return object_list(request, queryset=hufiec_list,
+		template_name= "strona/profile_view.html")
 
 #formularze
 class TestForm(forms.Form):

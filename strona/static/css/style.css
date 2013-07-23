@@ -52,14 +52,14 @@ font-size:.25em;
 	/* Content */
 	#content {
 		float: left;
-		width: 572px;
+		width: 650px;
 	}
 	
 	/* Sidebar */
 	aside{
 		float: left;
-		width: 302px;
-		margin-right:52px;
+		width: 250px;
+		margin-right:5px;
 	}
 			
 	/* Footer */
