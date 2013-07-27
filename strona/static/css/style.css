@@ -466,19 +466,18 @@ footer {
 			#contacts-form div:last-child {
 				padding-left:110px;
 			}
-table
+#skladki table
 {
 border-collapse:collapse;
 }
-table, td, th
+#skladki td, th
 {
 border:1px solid black;
 }
-td
+#skladki td
 {
 padding:10px;
 vertical-align:bottom;
 text-align:center;
-
 }
 /*==========================================*/

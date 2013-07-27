@@ -15,7 +15,7 @@ object, ol, output,
 p, pre, progress,
 q, 
 s, samp, section, small, span, source, strike, strong, sub, sup,
-tdvideo, tt,
+table, thbody, tr, td, tdvideo, tt,
 u, ul, 
 var{
     background: transparent;
