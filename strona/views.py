@@ -76,7 +76,7 @@ def hufiec_view(request, number):
 		extra_context={'hufiec_detail': hufiec_detail})
 
 def druzyny_view(request, slug):
-	druzyny_list = models.Druzyny.objects.filter(dziala__gt=0).order_by('-nazwa')
+	druzyny_list = models.Druzyny.objects.filter(dziala__gt=0).order_by('nazwa')
 	druzyny_detail = models.Druzyny.objects.get(slug__exact=slug)
 	return object_list(request, queryset=druzyny_list,
 		template_name= "strona/druzyny_view.html",
@@ -91,15 +91,16 @@ def rodzice_view(request, number):
 
 def osoby_view(request, slug):
 	dru_id = models.Druzyny.objects.filter(slug=slug)
-	osoby_list = models.Osoby.objects.filter(dru=dru_id).order_by('-nazwisko')
-	osoby_detail = models.Osoby.objects.get(id__exact=1)
+	osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('-nazwisko')
+	show = False
 	return object_list(request, queryset=osoby_list,
 		template_name= "strona/osoby_view.html",
-		extra_context={'osoby_detail': osoby_detail})
+		extra_context={'slug': slug , 'show': show })
 
 def osoby_detail(request, slug, number):
 	dru_id = models.Druzyny.objects.filter(slug=slug)
-	osoby_list = models.Osoby.objects.filter(dru=dru_id).order_by('-nazwisko')
+	show = True
+	osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('-nazwisko')
 	osoby_detail = models.Osoby.objects.get(id__exact=number)
 	query = ('''SELECT o.id, o.imie, o.nazwisko, SUM( w.kwota_wpl ) as wplata, s.rok, s.kwota_sk
 				FROM szs_osoby o
@@ -108,25 +109,55 @@ def osoby_detail(request, slug, number):
 				WHERE o.id = %s 
 				GROUP BY s.rok, o.imie, o.nazwisko ''')
 	params = ( number )
-
 	skladki_detail = models.Osoby.objects.raw(query, params)
 	return object_list(request, queryset=osoby_list,
 		template_name= "strona/osoby_view.html",
-		extra_context={'osoby_detail': osoby_detail, 'skladki_detail': skladki_detail})
+		extra_context={'osoby_detail': osoby_detail, 'skladki_detail': skladki_detail, 'show': show, 'slug': slug })
 
 def mapa_wyjazdow(request):
 	hufiec_list = models.Artykuly.objects.filter(categories=2).order_by('-posted_date')
-	hufiec_detail = models.Artykuly.objects.filter(categories=2).order_by("id")[0]
 	return object_list(request, queryset=hufiec_list,
-		template_name= "strona/mapa_wyjazdow.html",
-		extra_context={'hufiec_detail': hufiec_detail})
-
-	#return render_to_response( "strona/mapa_wyjazdow.html",  context_instance=RequestContext(request))
+		template_name= "strona/mapa_wyjazdow.html")
 
 def profile_view(request):
 	hufiec_list = models.Artykuly.objects.filter(categories=2).order_by('-posted_date')
 	return object_list(request, queryset=hufiec_list,
 		template_name= "strona/profile_view.html")
+
+## wyszukiwanie osoby po PESEL
+def person_search(request, slug):
+	search = False
+	druzyny_list = models.Druzyny.objects.filter(dziala__gt=0).order_by('-nazwa')
+	druzyny_detail = models.Druzyny.objects.get(slug__exact=slug)
+	person_find = None
+	if 'pesel' in request.GET:
+			qd = request.GET
+			search = True
+			try:
+				person_find = models.Osoby.objects.filter( pesel__exact=qd.__getitem__('pesel') )
+			except models.Osoby.DoesNotExist:
+				person_find = None
+
+	return object_list(request, queryset = druzyny_list,
+		template_name= "strona/person_search.html",
+		extra_context={'druzyny_detail': druzyny_detail , 'person_find': person_find, 'search': search} )
+
+def person_assign(request, slug, number):
+	osoba = models.Osoby.objects.get(id__exact=number)
+	druzyna = models.Druzyny.objects.get(slug__exact=slug)
+	osoba.dru_id = druzyna.id
+	osoba.aktywny = 1
+	osoba.save()
+	osoba_list = models.Osoby.objects.filter(id=number)
+
+	return object_list(request, queryset=osoba_list,
+		template_name= "strona/person_assign.html")
+## wyszukiwanie osoby po PESEL
+#from django.shortcuts import render
+
+#def person_search(request, slug):
+#    return render(request, 'person_search.html')
+
 
 
 

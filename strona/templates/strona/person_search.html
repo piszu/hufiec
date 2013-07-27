@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="wrapper">
+<!-- aside -->
+<aside>
+<h2><span>Dodanie osoby:</span></h2>
+<!-- .news -->
+<br>
+<ul class="news">
+{{ druzyny_detail.nazwa }}
+
+</ul>
+<!-- /.news -->
+</aside>
+<!-- content -->
+<section id="content">
+<article>
+<h2><span>Wyszukaj osobę:</span></h2>
+<h4></h4>
+<p> 
+
+<!--- { url  } --->
+<form method="get" action="/d/{{ druzyny_detail.slug }}/s/">
+	<b>Wprowadź numer PESEL:</b><br> 
+	<input type="text" name="pesel">
+	<br><br> 
+<input type="submit" value="Wyszukaj!" />
+</form>
+</p>
+<p>
+{% if search %}
+	{% if person_find %}
+		<h3>Znalazłem osoby o podanym numerze PESEL:</h3> <br>
+		{% for object in person_find %}
+			<b>{{ object|safe }}</b>
+				<h3>
+					<a href="{% url person_assign druzyny_detail.slug object.id %}">
+					Przepisz do Drużyny {{ druzyny_detail.menu_name }}
+					</a>
+				</h3>
+			<br>
+		{% endfor %}
+		<br>
+	<font color="red">Jeśli widzisz więcej niż jedną osobę z takimi samymi (lub podobnymi danymi), skontaktuj się z Piszem :) </font>
+	{% else  %}
+	 	Niestety nie znalazłem podanej osoby, możesz Dodać nową! 
+	{% endif %}
+{% endif %}
+</p>
+</article> 
+</section>
+
+</div>
+{% endblock %}
+

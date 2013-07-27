@@ -6,6 +6,7 @@
 	<aside>
 	<h2><span>Osoby w Drużynie:</span></h2>
 		<!-- .news -->
+<br>
 		<ul class="leftmenu">
 			{% for object in object_list %}
 				<li>
@@ -13,12 +14,20 @@
 					{{ object.nazwisko }} {{ object.imie }} </a></h3>
 				</li>
 			{% endfor %}
+<li>
+<br><br>
+<hr>
+<h3><a href="{% url person_search slug %}">Dodaj osobę!</a></h3>
+
+</li>
+
 		</ul>
 		<!-- /.news -->
 	</aside>
 <!-- content -->
 	<section id="content">
 <article>
+{% if show %}
 <h2><span>{{ osoby_detail.imie }} {{ osoby_detail.nazwisko }}</span></h2>
 <br>
 <p>
@@ -30,22 +39,31 @@
 	Miejsce urodzenia: {{ osoby_detail.m_urodzenia }} <br>
 	Uwagi: {{ osoby_detail.uwagi }} <br>		
 </p>
-<p>
+	<p>
 	<h3>Wpłacone składki: </h3>
-
-	<table id="skladki">
-	<tr>
-	<td>Wpłacona kwota</td><td>Rok</td><td>Ustalona kwota składek</td><td>Zaległości</td>
-	</tr>
-{% load app_filters %}
-	{% for object in skladki_detail %}
-	<tr>
-
-<td>{{ object.wplata }}</td><td>{{ object.rok }}</td><td>{{ object.kwota_sk }}</td><td>{{ object.kwota_sk|subtraction:object.wplata }}</td>
-	</tr>
-	{% endfor %}
-	</table>
+		<table id="skladki">
+		<tr>
+			<td>Wpłacona kwota</td><td>Rok</td><td>Ustalona kwota składek</td><td>Zaległości</td>
+		</tr>
+		{% load app_filters %}
+		{% for object in skladki_detail %}
+			{% if object.wplata %}
+				<tr>
+					<td>{{ object.wplata }}</td>
+					<td>{{ object.rok }}</td>
+					<td>{{ object.kwota_sk }}</td>
+					<td>{{ object.kwota_sk|subtraction:object.wplata }}</td>
+				</tr>
+			{% endif %}
+		{% endfor %}
+		</table>
+	</p>
+{% else %}
+<h2><span>Wybierz osobe do wyświetlenia.</span></h2>
+<p>
+<h3>Lub od razu <a href="{% url person_search slug %}">dodaj nową osobę!</a></h3>
 </p>
+{% endif %}
 </article> 
 	</section>
 </div>

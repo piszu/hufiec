@@ -30,7 +30,7 @@ Obecnie funkcje Drużynowego w tej Drużynie pełni <b>{{ druzyny_detail.druzyno
 <p>{{ druzyny_detail.opis|safe }}</p>
 <br>
 {% if user.is_authenticated %}
-	{% if user.last_name = druzyny_detail.slug %}
+	{% if user.last_name = druzyny_detail.slug or user.last_name == "all" %}
 <h3><a href="{% url osoby_view druzyny_detail.slug %}">Zarządzaj</a></h3>
 	{% endif %}
 {% endif %}

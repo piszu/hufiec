@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="wrapper">
+<!-- aside -->
+<aside>
+<h2><span></span></h2>
+<!-- .news -->
+<br>
+<ul class="news">
+{{ druzyny_detail.nazwa }}
+
+</ul>
+<!-- /.news -->
+</aside>
+<!-- content -->
+<section id="content">
+<article>
+<h2><span>Przepisanie osoby</span></h2>
+<h4></h4>
+<p> 
+Właśnie przepisałeś osobę {{ osoby_detail.imie }} do Drużyny {{ druzyny_detail.nazwa }}.
+<br><br>
+Wróć do widoku swojej Drużyny klikając tutaj.
+</p>
+</article> 
+</section>
+
+</div>
+{% endblock %}
+

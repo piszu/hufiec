@@ -29,12 +29,16 @@ urlpatterns = patterns('',
 	url(r'^h/mapa_wyjazdow/$', 'strona.views.mapa_wyjazdow', name='mapa_wyjazdow'), 
 
 	# druzyny
-#	url(r'^d/(?P<slug>)/$', 'strona.views.druzyny_view', name='druzyny_view'), 
 	url(r'^d/(?P<slug>[\w\-_]+)/$', 'strona.views.druzyny_view', name='druzyny_view'),
 	# osoby
 	url(r'^d/(?P<slug>[\w\-_]+)/o/$', 'strona.views.osoby_view', name='osoby_view'),
+	url(r'^d/(?P<slug>[\w\-_]+)/s/$', 'strona.views.person_search', name='person_search'),
+	url(r'^d/(?P<slug>[\w\-_]+)/assign/(?P<number>[0-9]+)/$', 'strona.views.person_assign', name='person_assign'),
 	url(r'^d/(?P<slug>[\w\-_]+)/o/(?P<number>[0-9]+)/$', 'strona.views.osoby_detail', name='osoby_detail'),
-	# url(r'^d/(?P<number>[0-9]+)/o/(?P<number>[0-9]+)/$', 'strona.views.osoby_view', name='osoby_view'), 
+	# wyszukiwanie osoby
+    # url(r'^person_search/$', 'strona.views.person_search'),
+
+
 	# rodzice
 	url(r'^r/(?P<number>[0-9]+)/$', 'strona.views.rodzice_view', name='rodzice_view'), 
 )
