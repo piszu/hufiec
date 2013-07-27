@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="wrapper">
+<!-- aside -->
+<aside>
+<h2><span>Twój Profil</span></h2>
+<!-- .news -->
+<ul class="news">
+
+
+</ul>
+<!-- /.news -->
+</aside>
+<!-- content -->
+<section id="content">
+<article>
+<h2><span>Użytkownik: {{ user.username }}</span></h2>
+<h4></h4>
+<p> 
+Imię i Nazwisko:  {{ user.first_name }} <br>
+Drużyna:  {{ user.last_name }} <br> 
+Email:  {{ user.email }} <br>
+</p>
+
+</article> 
+</section>
+
+</div>
+{% endblock %}
+

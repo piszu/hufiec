@@ -63,6 +63,7 @@ class Osoby(models.Model):
 	pesel = models.CharField('PESEL', max_length=11)
 	telefon = models.CharField('Telefon', max_length=9)
 	m_urodzenia = models.CharField('Miejsce Urodzenia', max_length=255)
+	email = models.CharField('Adres Email', max_length=255)
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
 	aktywny = models.CharField('Aktywna', max_length=2)
 	slug = models.SlugField('Odnośnik', max_length=255, unique=True)
@@ -82,7 +83,7 @@ class Osoby(models.Model):
 		full_name = property(_get_full_name)
 
 class Skladki(models.Model):
-	oso = models.ForeignKey(Osoby, related_name='SklOso')
+	kategoria = models.CharField('Kategoria', max_length=255)
 	kwota_sk = models.DecimalField('Kwota składek', max_digits=6, decimal_places=2)
 	rok = models.CharField('Rok', max_length = 5)
 
@@ -92,7 +93,7 @@ class Skladki(models.Model):
 		db_table = 'szs_skladki'
 
 	def __unicode__(self):
-		return '%s %s' % (self.rok, self.oso)
+		return '%s %s' % (self.rok, self.kategoria)
 
 class Wplaty(models.Model):
 	oso = models.ForeignKey(Osoby, related_name='WplOso')
@@ -108,7 +109,7 @@ class Wplaty(models.Model):
 		db_table = 'szs_wplaty'
 
 	def __unicode__(self):
-		return self.kwota_wpl
+		return '%s %s' % (self.kwota_wpl, self.oso)
 
 class Imprezy(models.Model):
 	nazwa = models.CharField('Nazwa', max_length=255)
@@ -142,4 +143,5 @@ class Zgloszenia(models.Model):
 
 	def __unicode__(self):
 		return self.imp
+
 

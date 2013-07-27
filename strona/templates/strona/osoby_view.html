@@ -18,19 +18,35 @@
 	</aside>
 <!-- content -->
 	<section id="content">
-		<article>
-		<h2><span>{{ osoby_detail.imie }} {{ osoby_detail.nazwisko }}</span></h2>
-		<br>
-		<p>
-			
-		</p>
-		<p>{{ osoby_detail.opis|safe }}</p>
-			{% if user.is_authenticated %}
-				{% if user.username = osoby_detail.dziala %}
-					Zarządzaj
-				{% endif %}
-			{% endif %}
-		</article> 
+<article>
+<h2><span>{{ osoby_detail.imie }} {{ osoby_detail.nazwisko }}</span></h2>
+<br>
+<p>
+	<h3>Dane: </h3>
+	Imię: {{ osoby_detail.imie }} <br>
+	Nazwisko: {{ osoby_detail.nazwisko }} <br>
+	Pesel: {{ osoby_detail.pesel }} <br>
+	Telefon: {{ osoby_detail.telefon }} <br>
+	Miejsce urodzenia: {{ osoby_detail.m_urodzenia }} <br>
+	Uwagi: {{ osoby_detail.uwagi }} <br>		
+</p>
+<p>
+	<h3>Wpłacone składki: </h3>
+
+	<table border ="1">
+	<tr>
+	<td>Wpłacona kwota</td><td>Rok</td><td>Ustalona kwota składek</td><td>Zaległości</td>
+	</tr>
+{% load app_filters %}
+	{% for object in skladki_detail %}
+	<tr>
+
+<td>{{ object.wplata }}</td><td>{{ object.rok }}</td><td>{{ object.kwota_sk }}</td><td>{{ object.kwota_sk|subtraction:object.wplata }}</td>
+	</tr>
+	{% endfor %}
+	</table>
+</p>
+</article> 
 	</section>
 </div>
 {% endblock %}

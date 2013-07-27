@@ -24,7 +24,6 @@ def login_user(request):
 def logout_then_login(request):
 	return django.contrib.auth.views.logout_then_login(request, login_url = '/logout/')
 
-
 # content
 class ArtykulyList(generic.ListView):
 	model = models.Artykuly
@@ -102,9 +101,18 @@ def osoby_detail(request, slug, number):
 	dru_id = models.Druzyny.objects.filter(slug=slug)
 	osoby_list = models.Osoby.objects.filter(dru=dru_id).order_by('-nazwisko')
 	osoby_detail = models.Osoby.objects.get(id__exact=number)
+	query = ('''SELECT o.id, o.imie, o.nazwisko, SUM( w.kwota_wpl ) as wplata, s.rok, s.kwota_sk
+				FROM szs_osoby o
+				LEFT JOIN szs_wplaty w ON w.oso_id = o.id
+				LEFT JOIN szs_skladki s ON w.skl_id = s.id
+				WHERE o.id = %s 
+				GROUP BY s.rok, o.imie, o.nazwisko ''')
+	params = ( number )
+
+	skladki_detail = models.Osoby.objects.raw(query, params)
 	return object_list(request, queryset=osoby_list,
 		template_name= "strona/osoby_view.html",
-		extra_context={'osoby_detail': osoby_detail})
+		extra_context={'osoby_detail': osoby_detail, 'skladki_detail': skladki_detail})
 
 def mapa_wyjazdow(request):
 	hufiec_list = models.Artykuly.objects.filter(categories=2).order_by('-posted_date')
@@ -119,6 +127,11 @@ def profile_view(request):
 	hufiec_list = models.Artykuly.objects.filter(categories=2).order_by('-posted_date')
 	return object_list(request, queryset=hufiec_list,
 		template_name= "strona/profile_view.html")
+
+
+
+
+
 
 #formularze
 class TestForm(forms.Form):
