@@ -21,7 +21,7 @@
 <p> 
 
 <!--- { url  } --->
-<form method="get" action="/d/{{ druzyny_detail.slug }}/s/">
+<form method="get" action="/d/{{ druzyny_detail.slug }}/search/">
 	<b>Wprowadź numer PESEL:</b><br> 
 	<input type="text" name="pesel">
 	<br><br> 
@@ -44,7 +44,11 @@
 		<br>
 	<font color="red">Jeśli widzisz więcej niż jedną osobę z takimi samymi (lub podobnymi danymi), skontaktuj się z Piszem :) </font>
 	{% else  %}
-	 	Niestety nie znalazłem podanej osoby, możesz Dodać nową! 
+				<h3>Niestety nie znalazłem podanej osoby, możesz
+					<a href="{% url person_add druzyny_detail.slug %}">
+					dodać nową! 
+					</a>
+				</h3>
 	{% endif %}
 {% endif %}
 </p>

@@ -31,10 +31,11 @@ urlpatterns = patterns('',
 	# druzyny
 	url(r'^d/(?P<slug>[\w\-_]+)/$', 'strona.views.druzyny_view', name='druzyny_view'),
 	# osoby
-	url(r'^d/(?P<slug>[\w\-_]+)/o/$', 'strona.views.osoby_view', name='osoby_view'),
-	url(r'^d/(?P<slug>[\w\-_]+)/s/$', 'strona.views.person_search', name='person_search'),
+	url(r'^d/(?P<slug>[\w\-_]+)/persons/$', 'strona.views.osoby_view', name='osoby_view'),
+	url(r'^d/(?P<slug>[\w\-_]+)/add/$', 'strona.views.person_add', name='person_add'),
+	url(r'^d/(?P<slug>[\w\-_]+)/search/$', 'strona.views.person_search', name='person_search'),
 	url(r'^d/(?P<slug>[\w\-_]+)/assign/(?P<number>[0-9]+)/$', 'strona.views.person_assign', name='person_assign'),
-	url(r'^d/(?P<slug>[\w\-_]+)/o/(?P<number>[0-9]+)/$', 'strona.views.osoby_detail', name='osoby_detail'),
+	url(r'^d/(?P<slug>[\w\-_]+)/persons/(?P<number>[0-9]+)/$', 'strona.views.osoby_detail', name='osoby_detail'),
 	# wyszukiwanie osoby
     # url(r'^person_search/$', 'strona.views.person_search'),
 

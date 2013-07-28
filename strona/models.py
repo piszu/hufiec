@@ -61,13 +61,13 @@ class Osoby(models.Model):
 	imie = models.CharField('Imię', max_length=255)
 	nazwisko = models.CharField('Nazwisko', max_length=255)
 	pesel = models.CharField('PESEL', max_length=11)
-	telefon = models.CharField('Telefon', max_length=9)
-	m_urodzenia = models.CharField('Miejsce Urodzenia', max_length=255)
-	email = models.CharField('Adres Email', max_length=255)
+	telefon = models.CharField('Telefon', max_length=9, blank=True)
+	m_urodzenia = models.CharField('Miejsce Urodzenia', max_length=255, blank=True)
+	email = models.CharField('Adres Email', max_length=255, blank=True)
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
 	aktywny = models.CharField('Aktywna', max_length=2)
 	slug = models.SlugField('Odnośnik', max_length=255, unique=True)
-	uwagi = models.TextField(verbose_name='Uwagi')
+	uwagi = models.TextField(verbose_name='Uwagi', blank=True)
 
 	class Meta:
 		verbose_name = "Osoba"

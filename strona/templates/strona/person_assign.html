@@ -7,10 +7,6 @@
 <h2><span></span></h2>
 <!-- .news -->
 <br>
-<ul class="news">
-{{ druzyny_detail.nazwa }}
-
-</ul>
 <!-- /.news -->
 </aside>
 <!-- content -->
@@ -19,9 +15,9 @@
 <h2><span>Przepisanie osoby</span></h2>
 <h4></h4>
 <p> 
-Właśnie przepisałeś osobę {{ osoby_detail.imie }} do Drużyny {{ druzyny_detail.nazwa }}.
+Właśnie przepisałeś osobę <b>{{ osoby_detail.imie }} {{ osoby_detail.nazwisko }}</b> do Drużyny <b> {{ druzyny_detail.nazwa }}</b>.
 <br><br>
-Wróć do widoku swojej Drużyny klikając tutaj.
+<h3>Wróć do widoku swojej Drużyny klikając <a href="{% url osoby_view slug %}">tutaj</a>.</h3>
 </p>
 </article> 
 </section>

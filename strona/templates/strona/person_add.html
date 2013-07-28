@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="wrapper">
+<!-- aside -->
+<aside>
+<h2><span></span></h2>
+<!-- .news -->
+<br>
+<h3><a href="{% url osoby_view teamslug %}">Powrót do widoku Drużyny</a></h3>
+
+<!-- /.news -->
+</aside>
+<!-- content -->
+<section id="content">
+<article>
+<h2><span>Dodanie nowej osoby</span></h2>
+<h4></h4>
+<p> 
+<font color="red">
+<b>Uwaga</b><br>
+W polu "Odnośnik" wpisz małymi literami pierwszą literę imienia a potem nazwisko, bez polskich znaków!<br>
+<b>Przykład</b><br>
+Mariusz Pisz - wpisz mpisz, Patryk Zapaśnik, wpisz pzapasnik.<br><br>
+</font>
+<form method="post" action="">
+<table id="contacts-form">    
+{% csrf_token %}
+    {{ form.as_table }}
+</table>
+<input type="submit" value="Dodaj!" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+
+
+<br>
+</p>
+</article> 
+</section>
+
+</div>
+{% endblock %}
+
