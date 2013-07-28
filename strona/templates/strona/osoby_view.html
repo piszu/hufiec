@@ -57,6 +57,18 @@
 			{% endif %}
 		{% endfor %}
 		</table>
+<br>
+Administracja:
+		<h3>
+			<a href="{% url person_del slug osoby_detail.id %}">
+			Usuń osobę z Drużyny.
+			</a>
+		</h3>
+		<h3>
+			<a href="{% url person_mod slug osoby_detail.id %}">
+			Modyfikuj osobę.
+			</a>
+		</h3>
 	</p>
 {% else %}
 <h2><span>Wybierz osobe do wyświetlenia.</span></h2>

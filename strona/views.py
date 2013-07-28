@@ -147,11 +147,9 @@ def person_search(request, slug):
 def person_assign(request, slug, number):
 	osoba = models.Osoby.objects.get(id=number)
 	druzyna = models.Druzyny.objects.get(slug=slug)
-	#update danych na osobie
 	osoba.dru_id = druzyna.id
 	osoba.aktywny = 1
 	osoba.save()
-
 	osoba_list = models.Osoby.objects.filter(id=number)
 	osoby_detail = models.Osoby.objects.get(id__exact=number)
 	druzyny_detail = models.Druzyny.objects.get(slug__exact=slug)
@@ -159,10 +157,40 @@ def person_assign(request, slug, number):
 		template_name= "strona/person_assign.html",
 		extra_context={'osoby_detail': osoby_detail, 'druzyny_detail': druzyny_detail,'slug': slug })
 
+def person_del(request, slug, number):
+	osoba = models.Osoby.objects.get(id=number)
+	druzyna = models.Druzyny.objects.get(slug=slug)
+	osoba.aktywny = 0
+	osoba.save()
+	osoba_list = models.Osoby.objects.filter(id=number)
+	osoby_detail = models.Osoby.objects.get(id__exact=number)
+	druzyny_detail = models.Druzyny.objects.get(slug__exact=slug)
+	return object_list(request, queryset=osoba_list,
+		template_name= "strona/person_del.html",
+		extra_context={'osoby_detail': osoby_detail, 'druzyny_detail': druzyny_detail,'slug': slug })
+
+
+def person_mod(request, slug, number):
+	teamslug = slug
+	osoba = models.Osoby.objects.get(id=number)
+	if request.method == 'POST':
+		form = ModPerson(request.POST, instance=osoba)
+		if form.is_valid():
+				form.save()
+				return render_to_response('strona/person_mod.html', 
+				{'form':form , 'teamslug': teamslug }, 
+				context_instance = RequestContext(request),)
+	else:      
+		form = ModPerson(instance=osoba)
+		print(form.as_table())
+	return render_to_response('strona/person_mod.html', 
+			{'form':form , 'teamslug': teamslug }, 
+			context_instance=RequestContext(request) )
+
 def person_add(request, slug):
 	teamslug = slug
 	if request.method == 'POST':
-		form = ArticleForm(request.POST)
+		form = AddPerson(request.POST)
 		if form.is_valid():
 			dru = models.Druzyny.objects.get(slug__exact=slug)
 			fromdata = models.Osoby()
@@ -177,21 +205,26 @@ def person_add(request, slug):
 			fromdata.uwagi = form.cleaned_data.get('uwagi', 'uwagi')
 			fromdata.email = form.cleaned_data.get('email', 'email')			
 			fromdata.save()
-			form = ArticleForm()
+			form = AddPerson()
 			print(form.as_table())
 			return render_to_response('strona/person_add.html', 
 			{'form':form , 'teamslug': teamslug }, 
 			context_instance = RequestContext(request),)
 	else:      
-		form = ArticleForm()
+		form = AddPerson()
 		print(form.as_table())
 	return render_to_response('strona/person_add.html', 
 			{'form':form , 'teamslug': teamslug }, 
 			context_instance=RequestContext(request) )
 
-class ArticleForm(ModelForm):
+class AddPerson(ModelForm):
      class Meta:
          model = models.Osoby
          fields = ['imie', 'nazwisko', 'pesel', 'telefon', 'm_urodzenia', 'email', 'slug', 'uwagi' ]
+
+class ModPerson(ModelForm):
+     class Meta:
+         model = models.Osoby
+         fields = ['imie', 'nazwisko', 'pesel', 'telefon', 'm_urodzenia', 'email', 'uwagi' ]
 
 
