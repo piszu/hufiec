@@ -100,7 +100,7 @@ class Wplaty(models.Model):
 	skl = models.ForeignKey(Skladki, related_name='WplSkl')
 	kwota_wpl = models.DecimalField('Kwota wpłaty', max_digits=6, decimal_places=2)
 	d_wplaty = models.DateField('Data wpłaty', auto_now_add=False)
-	uwagi = models.CharField('Uwagi', max_length=255)
+	uwagi = models.CharField('Uwagi', max_length=255, blank=True)
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
 
 	class Meta:
@@ -109,7 +109,7 @@ class Wplaty(models.Model):
 		db_table = 'szs_wplaty'
 
 	def __unicode__(self):
-		return '%s %s' % (self.kwota_wpl, self.oso)
+		return '%s %s %s' % (self.kwota_wpl, self.oso.nazwisko, self.oso.imie)
 
 class Imprezy(models.Model):
 	nazwa = models.CharField('Nazwa', max_length=255)

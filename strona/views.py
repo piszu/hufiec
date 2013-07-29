@@ -93,7 +93,7 @@ def rodzice_view(request, number):
 
 def osoby_view(request, slug):
 	dru_id = models.Druzyny.objects.filter(slug=slug)
-	osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('-nazwisko')
+	osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('nazwisko')
 	show = False
 	return object_list(request, queryset=osoby_list,
 		template_name= "strona/osoby_view.html",
@@ -102,7 +102,7 @@ def osoby_view(request, slug):
 def osoby_detail(request, slug, number):
 	dru_id = models.Druzyny.objects.filter(slug=slug)
 	show = True
-	osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('-nazwisko')
+	osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('nazwisko')
 	osoby_detail = models.Osoby.objects.get(id__exact=number)
 	query = ('''SELECT o.id, o.imie, o.nazwisko, SUM( w.kwota_wpl ) as wplata, s.rok, s.kwota_sk
 				FROM szs_osoby o
