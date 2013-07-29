@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from django.views import generic
 from django.conf.urls.defaults import patterns, include, url
 
@@ -182,7 +183,7 @@ def person_mod(request, slug, number):
 				context_instance = RequestContext(request),)
 	else:      
 		form = ModPerson(instance=osoba)
-		print(form.as_table())
+
 	return render_to_response('strona/person_mod.html', 
 			{'form':form , 'teamslug': teamslug }, 
 			context_instance=RequestContext(request) )
@@ -206,13 +207,13 @@ def person_add(request, slug):
 			fromdata.email = form.cleaned_data.get('email', 'email')			
 			fromdata.save()
 			form = AddPerson()
-			print(form.as_table())
+
 			return render_to_response('strona/person_add.html', 
 			{'form':form , 'teamslug': teamslug }, 
 			context_instance = RequestContext(request),)
 	else:      
 		form = AddPerson()
-		print(form.as_table())
+
 	return render_to_response('strona/person_add.html', 
 			{'form':form , 'teamslug': teamslug }, 
 			context_instance=RequestContext(request) )

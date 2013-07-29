@@ -3,7 +3,7 @@ from django.db import models
 
 class Kategorie(models.Model):
 	name = models.CharField('Nazwa Kategorii', max_length=100)
-	slug = models.SlugField('Odnośnik', unique=True, max_length=100)
+	slug = models.SlugField('Odnosnik', unique=True, max_length=100)
 	icon = models.ImageField('Ikonka Kategorii', upload_to='icons', blank=True)
 
 	class Meta:
@@ -15,7 +15,7 @@ class Kategorie(models.Model):
 
 class Artykuly(models.Model):
 	title = models.CharField('Tytuł', max_length=255)
-	slug = models.SlugField('Odnośnik', max_length=255, unique=True)
+	slug = models.SlugField('Odnosnik', max_length=255, unique=True)
 	wprowadzenie = models.CharField('Wprowadzenie', max_length=255)
 	text = models.TextField(verbose_name='Treść')
 	categories = models.ManyToManyField(Kategorie, verbose_name='Kategorie')
@@ -40,7 +40,7 @@ class Druzyny(models.Model):
 	dziala = models.CharField('Aktywna', max_length=5)
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
 	druzynowy = models.CharField('Drużynowy', max_length=255)
-	slug = models.SlugField('Odnośnik', max_length=255, unique=True)
+	slug = models.SlugField('Odnosnik', max_length=255, unique=True)
 	opis = models.TextField(verbose_name='Opis')
 
 	class Meta:
@@ -58,7 +58,7 @@ class Druzyny(models.Model):
 
 class Osoby(models.Model):
 	dru = models.ForeignKey(Druzyny, verbose_name='OsoDru')
-	imie = models.CharField('Imię', max_length=255)
+	imie = models.CharField('Imie', max_length=255)
 	nazwisko = models.CharField('Nazwisko', max_length=255)
 	pesel = models.CharField('PESEL', max_length=11)
 	telefon = models.CharField('Telefon', max_length=9, blank=True)
@@ -66,9 +66,9 @@ class Osoby(models.Model):
 	email = models.CharField('Adres Email', max_length=255, blank=True)
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
 	aktywny = models.CharField('Aktywna', max_length=2)
-	slug = models.SlugField('Odnośnik', max_length=255, unique=True)
+	slug = models.SlugField('Odnosnik', max_length=255, unique=True)
 	uwagi = models.TextField(verbose_name='Uwagi', blank=True)
-
+	ordering = ('nazwisko')
 	class Meta:
 		verbose_name = "Osoba"
 		verbose_name_plural = "Osoby"
@@ -78,7 +78,7 @@ class Osoby(models.Model):
 		return '%s %s' % (self.nazwisko, self.imie)
 
 	def _get_full_name(self):
-		"Zwraca Imię i Nazwisko."
+		"Zwraca Imie i Nazwisko."
 		return '%s %s' % (self.nazwisko, self.imie)
 		full_name = property(_get_full_name)
 
@@ -120,7 +120,7 @@ class Imprezy(models.Model):
 	zgloszenia = models.CharField('Zgłoszenia', max_length=255)
 	info = models.CharField('Info', max_length=255)
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
-	slug = models.SlugField('Odnośnik', max_length=255, unique=True)
+	slug = models.SlugField('Odnosnik', max_length=255, unique=True)
 
 	class Meta:
 		verbose_name = "Impreza"
@@ -134,7 +134,7 @@ class Zgloszenia(models.Model):
 	oso = models.ForeignKey(Osoby, related_name='ZglOso')
 	imp = models.ForeignKey(Imprezy, related_name='ZglImp')
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
-	slug = models.SlugField('Odnośnik', max_length=255, unique=True)
+	slug = models.SlugField('Odnosnik', max_length=255, unique=True)
 
 	class Meta:
 		verbose_name = "Zgłoszenie"

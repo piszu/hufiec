@@ -6,6 +6,7 @@ from strona.models import *
 admin.site.register(Kategorie)
 admin.site.register(Artykuly)
 admin.site.register(Osoby)
+
 admin.site.register(Druzyny)
 admin.site.register(Skladki)
 admin.site.register(Wplaty)
