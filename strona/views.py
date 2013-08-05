@@ -79,7 +79,7 @@ def hufiec_view(request, number):
 		extra_context={'hufiec_detail': hufiec_detail})
 
 def druzyny_view(request, slug):
-	druzyny_list = models.Druzyny.objects.filter(dziala__gt=0).order_by('nazwa')
+	druzyny_list = models.Druzyny.objects.order_by('nazwa')
 	druzyny_detail = models.Druzyny.objects.get(slug__exact=slug)
 	return object_list(request, queryset=druzyny_list,
 		template_name= "strona/druzyny_view.html",
@@ -94,7 +94,10 @@ def rodzice_view(request, number):
 
 def osoby_view(request, slug):
 	dru_id = models.Druzyny.objects.filter(slug=slug)
-	osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('nazwisko')
+	if slug == 'kadra':
+		osoby_list = models.Osoby.objects.filter(dru=dru_id).order_by('nazwisko')
+	else:
+		osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('nazwisko')
 	show = False
 	return object_list(request, queryset=osoby_list,
 		template_name= "strona/osoby_view.html",
@@ -103,7 +106,10 @@ def osoby_view(request, slug):
 def osoby_detail(request, slug, number):
 	dru_id = models.Druzyny.objects.filter(slug=slug)
 	show = True
-	osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('nazwisko')
+	if slug == 'kadra':
+		osoby_list = models.Osoby.objects.filter(dru=dru_id).order_by('nazwisko')
+	else:
+		osoby_list = models.Osoby.objects.filter(dru=dru_id).filter(aktywny=1).order_by('nazwisko')
 	osoby_detail = models.Osoby.objects.get(id__exact=number)
 	query = ('''SELECT o.id, o.imie, o.nazwisko, SUM( w.kwota_wpl ) as wplata, s.rok, s.kwota_sk
 				FROM szs_osoby o
@@ -170,7 +176,6 @@ def person_del(request, slug, number):
 		template_name= "strona/person_del.html",
 		extra_context={'osoby_detail': osoby_detail, 'druzyny_detail': druzyny_detail,'slug': slug })
 
-
 def person_mod(request, slug, number):
 	teamslug = slug
 	osoba = models.Osoby.objects.get(id=number)
@@ -183,7 +188,6 @@ def person_mod(request, slug, number):
 				context_instance = RequestContext(request),)
 	else:      
 		form = ModPerson(instance=osoba)
-
 	return render_to_response('strona/person_mod.html', 
 			{'form':form , 'teamslug': teamslug }, 
 			context_instance=RequestContext(request) )
@@ -207,15 +211,35 @@ def person_add(request, slug):
 			fromdata.email = form.cleaned_data.get('email', 'email')			
 			fromdata.save()
 			form = AddPerson()
-
 			return render_to_response('strona/person_add.html', 
 			{'form':form , 'teamslug': teamslug }, 
 			context_instance = RequestContext(request),)
 	else:      
 		form = AddPerson()
-
 	return render_to_response('strona/person_add.html', 
 			{'form':form , 'teamslug': teamslug }, 
+			context_instance=RequestContext(request) )
+	
+def person_payment(request, slug, number):
+	if request.method == 'POST':
+		skladki = PaymentForm(request.POST)
+		if skladki.is_valid():
+			oso = models.Osoby.objects.get(id__exact=number)
+			fromdata = models.Wplaty()
+			fromdata.oso_id = oso.id
+			fromdata.skl = skladki.cleaned_data.get('skl', 'skl')
+			fromdata.kwota_wpl = skladki.cleaned_data.get('kwota_wpl', 'kwota_wpl')
+			fromdata.d_wplaty = skladki.cleaned_data.get('d_wplaty', 'd_wplaty')
+			fromdata.uwagi = skladki.cleaned_data.get('uwagi', 'uwagi')
+			fromdata.save()
+			skladki = PaymentForm()
+			return render_to_response('strona/person_payment.html', 
+					{'skladki':skladki }, 
+					context_instance = RequestContext(request),)
+	else:      
+		skladki = PaymentForm()
+	return render_to_response('strona/person_payment.html', 
+			{'skladki':skladki }, 
 			context_instance=RequestContext(request) )
 
 class AddPerson(ModelForm):
@@ -227,5 +251,12 @@ class ModPerson(ModelForm):
      class Meta:
          model = models.Osoby
          fields = ['imie', 'nazwisko', 'pesel', 'telefon', 'm_urodzenia', 'email', 'uwagi' ]
+
+class PaymentForm(ModelForm):
+     class Meta:
+         model = models.Wplaty
+         fields = ['skl', 'kwota_wpl', 'd_wplaty', 'uwagi' ]
+
+
 
 

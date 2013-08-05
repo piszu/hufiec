@@ -4,7 +4,7 @@
 <div class="wrapper">
 <!-- aside -->
 	<aside>
-	<h2><span>Osoby w Drużynie:</span></h2>
+	<h2><span>Kadra Hufca:</span></h2>
 		<!-- .news -->
 <br>
 		<ul class="leftmenu">
@@ -75,7 +75,7 @@ Administracja:
 <br>
 {% if user.is_authenticated %}
 	{% if user.last_name == "all" %}
-<h3><a href="{% url person_pay slug osoby_detail.id %}">Rejestruj wpłatę</a></h3>
+<h3><a href="{% url person_pay osoby_detail.id %}">Rejestruj wpłatę</a></h3>
 	{% endif %}
 {% endif %}
 {% else %}

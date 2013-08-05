@@ -36,6 +36,9 @@ urlpatterns = patterns('',
 	url(r'^d/(?P<slug>[\w\-_]+)/search/$', 'strona.views.person_search', name='person_search'),
 	url(r'^d/(?P<slug>[\w\-_]+)/del/(?P<number>[0-9]+)/$', 'strona.views.person_del', name='person_del'),
 	url(r'^d/(?P<slug>[\w\-_]+)/mod/(?P<number>[0-9]+)/$', 'strona.views.person_mod', name='person_mod'),
+	# widoki administracyjne
+	# url(r'^d/kadra/$', 'strona.views.kadra_view', name='kadra_view'),
+	url(r'^d/(?P<slug>[\w\-_]+)/pay/(?P<number>[0-9]+)/$', 'strona.views.person_payment', name='person_pay'),
 	url(r'^d/(?P<slug>[\w\-_]+)/assign/(?P<number>[0-9]+)/$', 'strona.views.person_assign', name='person_assign'),
 	url(r'^d/(?P<slug>[\w\-_]+)/persons/(?P<number>[0-9]+)/$', 'strona.views.osoby_detail', name='osoby_detail'),
 	# wyszukiwanie osoby

@@ -26,7 +26,7 @@ class Artykuly(models.Model):
 		verbose_name = "Artykuł"
 		verbose_name_plural = "Artykuły"
 		db_table = 'h_artykuly'
-
+		
 	def __unicode__(self):
 		return self.title
 
@@ -35,7 +35,7 @@ class Druzyny(models.Model):
 	nazwa = models.CharField('Nazwa Drużyny', max_length=500)
 	menu_name = models.CharField('Skrócona nazwa Drużyny', max_length=255)
 	data_utworzenia = models.DateTimeField('Data utworzenia')
-	gzbiorki = models.CharField('Godzina zbiórek', max_length=15)
+	gzbiorki = models.CharField('Godzina zbiórek', max_length=40)
 	mzbiorki = models.CharField('Miejsce zbiórek', max_length=255)
 	dziala = models.CharField('Aktywna', max_length=5)
 	add_date = models.DateTimeField('Data dodania', auto_now_add=True)
@@ -73,6 +73,7 @@ class Osoby(models.Model):
 		verbose_name = "Osoba"
 		verbose_name_plural = "Osoby"
 		db_table = 'szs_osoby'
+		ordering = ['nazwisko']
 
 	def __unicode__(self):
 		return '%s %s' % (self.nazwisko, self.imie)

@@ -5,13 +5,22 @@
 <!-- aside -->
 <aside>
 <h2><span>Drużyny</span></h2>
+<br>
 <!-- .news -->
 <ul class="leftmenu">
 {% for object in object_list %}
-<li>
-<h3><a href="{% url druzyny_view object.slug %}">{{ object.menu_name }}</a></h3>
-</li>
+	{% if object.slug != "kadra" %}
+	<li>
+	<h3><a href="{% url druzyny_view object.slug %}">{{ object.menu_name }}</a></h3>
+	</li>
+	{% else %}
+		{% if user.is_authenticated and user.last_name  == "all" %}		
+			<h3><a href="{% url druzyny_view object.slug %}">{{ object.menu_name }}</a></h3>
+		{% endif %}
+	{% endif %}
+
 {% endfor %}
+<br>
 
 </ul>
 <!-- /.news -->
