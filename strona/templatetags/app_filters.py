@@ -10,6 +10,6 @@ def subtraction( value, arg ):
     try:
         value = long( value )
         arg = long( arg )
-        if arg: return value - arg
+        return long( value - arg )
     except: pass
-    return ''
+    return 'blad wyliczenia'

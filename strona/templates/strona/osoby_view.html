@@ -10,7 +10,7 @@
 		<ul class="leftmenu">
 			{% for object in object_list %}
 				<li>
-					<h3><a href="{% url osoby_detail object.dru.slug object.id %}">
+					<h3><a href="{% url osoby_detail slug object.id %}">
 					{{ object.nazwisko }} {{ object.imie }} </a></h3>
 				</li>
 			{% endfor %}
@@ -48,7 +48,7 @@
 		</tr>
 		{% load app_filters %}
 		{% for object in skladki_detail %}
-			{% if object.wplata %}
+			{% if object.rok %}
 				<tr>
 					<td>{{ object.wplata }}</td>
 					<td>{{ object.rok }}</td>
